@@ -1,7 +1,0 @@
-php_value display_errors Off
-php_value mbstring.http_input auto
-php_value date.timezone Africa/Algiers
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^\.]+)$ $1.php [NC,L]
