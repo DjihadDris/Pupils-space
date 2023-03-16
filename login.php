@@ -129,7 +129,7 @@ $conn->close();
         </style>
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
-   function onSubmit(token) {
+   function onSubmit() {
     if(document.getElementById('user').value != "" && document.getElementById('password').value != ""){
      document.getElementById("loginform").submit();
     }else{
@@ -202,7 +202,7 @@ if($_GET['false'] == "error"){
                                     <div class="btn-group btn-block mx-auto" role="group">
                                         <!--<button type="submit" name="submit" class="btn btn-success waves-effect waves-light"><span class="btn-label"><i class="fas fa-home"></i></span>تسجيل الدخول</button>-->
                                         <input type="hidden" name="submit_frm" value="1">
-                                        <button class="g-recaptcha btn btn-success waves-effect waves-light" data-sitekey="6Lek3RwkAAAAALwau0n7tUMKTuWPtIWArV8M8QP5" data-callback='onSubmit' data-action='submit'><span class="btn-label"><i class="fas fa-home"></i></span>تسجيل الدخول</button>
+                                        <button class="btn btn-success waves-effect waves-light" onclick='onSubmit()' type='submit'><span class="btn-label"><i class="fas fa-home"></i></span>تسجيل الدخول</button>
                                         <a href="register" class="btn btn-danger waves-effect waves-light"><span class="btn-label"><i class="fas fa-user-plus"></i></span>تسجيل جديد</a>
                                         <span onclick="show()" class="btn btn-warning waves-effect waves-light"><span class="btn-label"><i class="fas fa-envelope"></i></span>إستعادة كلمة المرور</span>
                                     </div>
