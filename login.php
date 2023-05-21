@@ -232,11 +232,38 @@ $.getJSON("https://api.ipify.org?format=json", function(data) {
                                 <!--<script src="https://awlyaa.education.gov.dz/public/assets/plugins/bootstrap/js/bootstrap.min.js"></script>-->
                                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
                                 <!-- Custom JavaScript -->
-                                <script>
-                                function show(){
-                                    alertify.alert("قم بالتواصل مع إدارة الموقع لإسترجاع كلمة المرور الخاصة بحسابك.");
-                                }
-                                </script>
+<script>
+function show(){
+alertify.prompt("إسم المستخدم/ البريد الإلكتروني:", "",
+  function(evt, value ){
+if(value != ""){
+
+$.ajax({
+url: "sendmail.php",
+type: "POST",
+cache: false,
+data:{
+ue: value
+},	
+success: function(dataResult){
+var dataResult = JSON.parse(dataResult);
+if(dataResult.statusCode==200){
+alertify.success(dataResult.message);
+}else{
+alertify.error(dataResult.message);
+}
+}
+});
+
+}else{
+    alertify.error('الرجاء إدخال إسم المستخدم/ البريد الإلكتروني');
+}
+  },
+  function(){
+    alertify.error('Cancel');
+  });
+}
+</script>
                                 </body>
 
                                 </html>
