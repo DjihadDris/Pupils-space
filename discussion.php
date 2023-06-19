@@ -3,7 +3,6 @@ if(!isset($_COOKIE['id'])){
     header('Location: login');
 }
 $name = $_COOKIE['year']."-".$_COOKIE['div'];
-fopen ( "$name.html", "w" );
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -188,6 +187,7 @@ $conn->close();
 		fclose ( $handle );
 		echo $contents;
 		}else{
+        fopen ( "$name.html", "w" );
         echo "<h5 style='line-height: 275px; text-align: center;'>لا توجد رسائل، كن أول من يدردش..</h5>";
         }
 	?>
@@ -197,7 +197,7 @@ $conn->close();
 <div class="input-group mb-3">
 <input type="text" class="form-control" id="usermsg" placeholder="الرسالة">
 <div class="input-group-append">
-<button type="input" class="btn btn-success" type="submit">إرسال</button>
+<button class="btn btn-success" type="submit">إرسال</button>
 </div>
 </div>
 

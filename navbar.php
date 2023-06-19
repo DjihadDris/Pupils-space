@@ -199,7 +199,7 @@ location.reload();
             <a class="navbar-brand" href="/">
                 </b>
                 <span>
-                    <img style="height: 60px !important;" src="souledjno.png" class="light-logo" alt="ثانوية صولاج السعيد"></span> </a>
+                    <img style="height: 60px !important; padding: 10px !important;" src="souledjno.png" class="light-logo" alt="ثانوية صولاج السعيد"></span> </a>
         </div>
         <div class="navbar-collapse">
             <ul class="navbar-nav mr-auto mt-md-0 text-center">
