@@ -69,8 +69,10 @@ if("$row[auth]" == "yes"){
 <div class="alert alert-danger"><b>ملاحظة: </b>بعد إلغاء تفعيل ثم تفعيل الخدمة سيتم إنشاء رمز جديد.</div>
 <br>
 <input type="hidden" id="authsecret">
-<img id="authimg">
+<img id="authimg" alt="QR Code">
 <br><br>
+<h5>أو يمكنك إدخال الرمز مباشرة: <b><span id="authsecret2">-</span></b></h5>
+<br>
 <div class="input-group mb-3">
 <input id="authotp" type="number" class="form-control" placeholder="رمز التحقق">
 <div class="input-group-append">
@@ -98,6 +100,15 @@ $conn->close();
 </div>
 
 <script>
+<?php
+include('db.php');
+$sql = "SELECT * FROM students WHERE ID='$_COOKIE[id]' AND status='yes'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  while($row = $result->fetch_assoc()) {
+if("$row[auth]" != "yes"){
+?>
 $.ajax({
 url: "auth/example.php",
 type: "GET",
@@ -109,8 +120,12 @@ success: function(dataResult){
 var dataResult = JSON.parse(dataResult);
 document.getElementById('authimg').setAttribute('src', dataResult.url);
 document.getElementById('authsecret').value = dataResult.secret;
+document.getElementById('authsecret2').innerHTML = dataResult.secret;
 }
 });
+<?php
+}}}
+?>
 
 function verify(){
 var secret = document.getElementById('authsecret').value;
@@ -127,6 +142,7 @@ data:{
 },
 beforeSend: function() {
     document.getElementById('authotp').disabled = true;
+    document.getElementById('authbtn').disabled = true;
 	$('#authbtn').html('<i class="fa fa-spinner fa-spin"></i>');
 },
 success: function(dataResult){
@@ -144,18 +160,19 @@ data:{
 success: function(dataResult){
 var dataResult = JSON.parse(dataResult);
 if(dataResult.status == 200){
-$('#authbtn').html('تفعيل');
 alertify.success('تم تفعيل المصادقة الثنائية بنجاح');
 location.reload();
 }else{
 $('#authbtn').html('تفعيل');
 alertify.error('تعذر تفعيل المصادقة الثنائية');
+document.getElementById('authbtn').disabled = false;
 }
 }
 });
 
 }else{
 document.getElementById('authotp').disabled = false;
+document.getElementById('authbtn').disabled = false;
 $('#authbtn').html('تفعيل');
 alertify.error('رمز التحقق خاطئ، الرجاء إدخال الرمز الصحيح');
 }
@@ -169,24 +186,24 @@ alertify.error('رمز التحقق خاطئ، الرجاء إدخال الرم�
 function unverify(){
 $.ajax({
 url: "auth/update.php",
-type: "GET",
+type: "POST",
 cache: false,
 data:{
     type: "desactivate"
 },
 beforeSend: function() {
 	$('#authbtn').html('<i class="fa fa-spinner fa-spin"></i>');
+    document.getElementById('authbtn').disabled = true;
 },
 success: function(dataResult){
 var dataResult = JSON.parse(dataResult);
 if(dataResult.status == 200){
-$('#authbtn').html('إلغاء التفعيل');
 alertify.success('تم إلفاء تفعيل المصادقة الثنائية بنجاح');
 location.reload();
 }else{
 $('#authbtn').html('إلغاء التفعيل');
+document.getElementById('authbtn').disabled = false;
 alertify.error('تعذر إلغاء تفعيل المصادقة الثنائية');
-location.reload();
 }
 }
 });
@@ -199,7 +216,7 @@ location.reload();
             <a class="navbar-brand" href="/">
                 </b>
                 <span>
-                    <img style="height: 60px !important; padding: 10px !important;" src="souledjno.png" class="light-logo" alt="ثانوية صولاج السعيد"></span> </a>
+                    <img style="height: 60px !important; padding: 10px !important;" src="souledj.png" class="light-logo" alt="فضاء التلاميذ"></span> </a>
         </div>
         <div class="navbar-collapse">
             <ul class="navbar-nav mr-auto mt-md-0 text-center">
@@ -209,7 +226,7 @@ location.reload();
                 <!-- Profile -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="pupil.png" style="width: 80px; height: 50px;" alt="حسابي" class="profile-pic" /> مرحبا، <?php echo $_COOKIE['name']; ?></a>
+                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="pupil.png" style="width: 80px; height: 50px;" alt="حسابي" class="profile-pic"><!--<img src='<?php echo "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ); ?>' style='width: 50px; height: 50px;' class='profile-pic'>--> مرحبا، <?php echo $_COOKIE['name']; ?></a>
                     <div class="dropdown-menu dropdown-menu-right scale-up">
                         <ul class="dropdown-user">
                             <li><a data-toggle="modal" data-target="#auth"><i class="fas fa-lock"></i> المصادقة الثنائية</a></li>

@@ -27,7 +27,7 @@ if($_GET['type'] == "set"){
 $authenticator = new PHPGangsta_GoogleAuthenticator();
 $secret = $authenticator->createSecret(); //save this at server side
  
-$website = 'ثانوية صولاج السعيد: فضاء التلاميذ'; //Your Website
+$website = 'فضاء التلاميذ'; //Your Website
 $title= $_COOKIE['name']." - ".$_COOKIE['year']." ".$_COOKIE['div'];
 $qrCodeUrl = $authenticator->getQRCodeGoogleUrl($title, $secret,$website);
 

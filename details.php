@@ -1,7 +1,7 @@
 <?php
 if(!isset($_COOKIE['id'])){
-    header('Location: login');
-}
+    header('Location: login?from=details');
+}else{
 include('db.php');
 $sql = "SELECT * FROM students WHERE ID='$_COOKIE[id]'";
 $result = $conn->query($sql);
@@ -22,6 +22,7 @@ setcookie("type", "$row[type]", time() + (86400 * 30), "/");
       header('Location: logout');
   }
 $conn->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -37,13 +38,14 @@ $conn->close();
   gtag('config', 'G-5TZY2PZW11');
 </script>
         <meta charset="utf-8">
+        <meta name="google-site-verification" content="zoT5Rf9AiWTOzuI6a90el_rX4Q9JeTw92Z6ZFavesug" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="فضاء التلاميذ">
+        <meta name="author" content="Djihad Dris">
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="https://awlyaa.education.gov.dz/public/assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
         <title>فضاء التلاميذ: بياناتي</title>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.1/css/all.css">
@@ -56,6 +58,7 @@ $conn->close();
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Alexandria&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="effetcs%20-%20Copy.css" rel="stylesheet">
         <!-- include the style -->
@@ -65,7 +68,7 @@ $conn->close();
         <!-- include the script -->
         <script src="alert/alertify.js"></script>
         <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
+        alertify.defaults.glossary.title = 'فضاء التلاميذ';
         alertify.defaults.glossary.ok = 'موافق';
         alertify.defaults.glossary.cancel = 'إلغاء';
         alertify.set('notifier','position', 'bottom-right');
@@ -73,13 +76,14 @@ $conn->close();
         <style>
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Alexandria&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap');
             body {
-                font-family: 'IBM Plex Sans Arabic', sans-serif !important;
+                font-family: 'Readex Pro', sans-serif !important;
             }
             a{
                 text-decoration: none;
             }
-            popup_heading_text, notification_title, #webpushrOnBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
+            popup_heading_text, notification_title, #webpushrOnBtn, #webpushrOffBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
                 font-family: 'Alexandria' !important;
             }
 
@@ -90,7 +94,7 @@ display: none;
 }
         </style>
 <!--Form Validation CSS -->
-    <link href="https://ostad.education.gov.dz/public/assets/css/colors/blue.css" id="theme" rel="stylesheet">
+<link href="https://ostad.education.gov.dz/public/assets/css/colors/blue.css" id="theme" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
 
 <!-- ============================================================== -->
@@ -119,19 +123,6 @@ display: none;
     <script src="https://ostad.education.gov.dz/public/assets/plugins/icheck/icheck.init.js"></script>
     <script src="https://ostad.education.gov.dz/public/assets/plugins/select2/js/select2.min.js"></script>
     <script src="https://ostad.education.gov.dz/public/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-
-        <!-- include the style -->
-        <link rel="stylesheet" href="alert/css/alertify.rtl.css" />
-        <!-- include a theme -->
-        <link rel="stylesheet" href="alert/css/themes/default.rtl.css" />
-        <!-- include the script -->
-        <script src="alert/alertify.js"></script>
-        <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
-        alertify.defaults.glossary.ok = 'موافق';
-        alertify.defaults.glossary.cancel = 'إلغاء';
-        alertify.set('notifier','position', 'bottom-right');
-        </script>
     </head>
 
 <body class="fix-header card-no-border">
@@ -167,7 +158,6 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
   // output data of each row
   while($row = $result->fetch_assoc()) {
-
 ?>
 
 				<div class="ribbon ribbon-bookmark ribbon-right ribbon-danger">بيانات الحساب</div>
@@ -191,7 +181,7 @@ if ($result->num_rows > 0) {
 							<label class="control-label">حالة الحساب:</label>
 						</div>
 						<div class="col-sm-4">
-							<label class="text-danger"><?php if("$row[ver]" == "yes"){ echo "موثّق <img src='sbadgeb.png'>"; }else if("$row[ver]" == "wait"){ echo "في إنتظار التوثيق"; }else{ echo "غير موثّق <i class='fas fa-badge'></i>"; } ?></label>
+							<label class="text-danger"><?php if("$row[ver]" == "yes"){ echo "موثّق <img src='sbadgeb.png' width='17.5' height='17.5'>"; }else if("$row[ver]" == "wait"){ echo "في إنتظار التوثيق"; }else{ echo "غير موثّق <i class='fas fa-badge'></i>"; } ?></label>
 						</div>
                         <div class="col-sm-2">
 							<label class="control-label">آخر تسجيل دخول:</label>
@@ -346,7 +336,7 @@ mysqli_close($conn);
 يتم حظر حسابك إذا قمت بتقديم أكثر من طلب واحد لنفس الحقل.
 </span></div>
 					<div class='form-group row'>
-						<select class="form-control" id="requestEdit" required onchange="data()">
+						<select class="form-control" id="requestEdit" required onchange="selecteddata()">
                                 <option value="">--إختر الحقل المراد تعديله--</option>
 							<optgroup label="بيانات الحساب">
 								<option value="user" id="user">إسم المستخدم</option>
@@ -378,34 +368,7 @@ mysqli_close($conn);
                                 <!-- Custom JavaScript -->
                                 <script src="changepass.js"></script>
                                 <script>
-                                function ver(){
-                                    var emailver = document.getElementById('emailver').innerHTML;
-                                    var genderver = document.getElementById('genderver').innerHTML;
-                                    var dobver = document.getElementById('dobver').innerHTML;
-                                    if(emailver != "" && genderver != "" && dobver != ""){
-        $.ajax({
-			url: "orderver.php",
-			type: "POST",
-			cache: false,
-            beforeSend: function() {
-				$('#orderverbtn').html('<i class="fa fa-spinner fa-spin"></i>');
-			},
-			success: function(dataResult){
-				var dataResult = JSON.parse(dataResult);
-				if(dataResult.statusCode==200){
-					$('#orderverbtn').html('<i class="fas fa-paper-plane"></i> طلب توثيق الحساب');
-					location.reload();		
-				}else if(dataResult.statusCode==201){
-                    $('#orderverbtn').html('<i class="fas fa-paper-plane"></i> طلب توثيق الحساب');
-                    alertify.error('تعذّر إرسال الطلب، الرجاء التواصل مع الإدارة');	
-                }
-			}
-		});
-                                    }else{
-                                        alertify.alert('الرجاء التأكد من وجود البريد الإلكتروني، الجنس وكذا تاريخ الميلاد حتى تتمكن من إرسال طلب التوثيق.');
-                                    }
-                                }
-                                function data(){
+                                function selecteddata(){
                                     var select = document.getElementById('requestEdit');
                                     var selectedFields = document.getElementById('selectedFields');
                                     if(select.value != ""){
@@ -418,6 +381,37 @@ mysqli_close($conn);
                                         }
                                     }
                                 }
+
+                                function ver(){
+                                    var emailver = document.getElementById('emailver').innerHTML;
+                                    var genderver = document.getElementById('genderver').innerHTML;
+                                    var dobver = document.getElementById('dobver').innerHTML;
+                                    if(emailver != "" && genderver != "" && dobver != ""){
+        $.ajax({
+			url: "orderver.php",
+			type: "POST",
+			cache: false,
+            beforeSend: function() {
+				$('#orderverbtn').html('<i class="fa fa-spinner fa-spin"></i>');
+                document.getElementById('orderverbtn').disabled = true;
+			},
+			success: function(dataResult){
+				var dataResult = JSON.parse(dataResult);
+				if(dataResult.statusCode==200){
+					/*$('#orderverbtn').html('<i class="fas fa-paper-plane"></i> طلب توثيق الحساب');*/
+					location.reload();		
+				}else if(dataResult.statusCode==201){
+                    $('#orderverbtn').html('<i class="fas fa-paper-plane"></i> طلب توثيق الحساب');
+                    document.getElementById('orderverbtn').disabled = false;
+                    alertify.error('تعذّر إرسال الطلب، الرجاء التواصل مع الإدارة');	
+                }
+			}
+		});
+                                    }else{
+                                        alertify.alert('الرجاء التأكد من وجود البريد الإلكتروني، الجنس وكذا تاريخ الميلاد حتى تتمكن من إرسال طلب التوثيق.');
+                                    }
+                                }
+                                
                                 function savedata(){
                                     var select = document.getElementById('requestEdit').value;
                                     var inputs = document.getElementById('selectedFields').innerHTML;
@@ -478,19 +472,22 @@ mysqli_close($conn);
 			},
             beforeSend: function() {
 				$('#requestEditBtn').html('<i class="fa fa-spinner fa-spin"></i>');
+                document.getElementById('requestEditBtn').disabled = true;
 			},		
 			success: function(dataResult){
 				var dataResult = JSON.parse(dataResult);
 				if(dataResult.statusCode==200){
-                    $('#requestEditBtn').html('تقديم الطلب');
-					$('#editModal').modal('hide');
 					location.reload();			
 				}else if(dataResult.statusCode==201){
                     $('#requestEditBtn').html('تقديم الطلب');
-                    alertify.error('تعذّر إرسال الطلب، الرجاء التواصل مع الإدارة');	
+                    alertify.error('تعذّر إرسال الطلب، الرجاء التواصل مع الإدارة');
+                    document.getElementById('requestEditBtn').disabled = false;
                 }else if(dataResult.statusCode==202){
                     $('#requestEditBtn').html('تقديم الطلب');
                     alertify.error('الرجاء إدخال التصحيح في الحقل المراد تعديله');
+                    document.getElementById('requestEditBtn').disabled = false;
+                }else{
+                    location.reload();
                 }
 			}
 		});
@@ -499,7 +496,24 @@ mysqli_close($conn);
                                     }
                                 }
                                 </script>
-<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });</script><!-- end webpushr code -->
+<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });
+webpushr('fetch_id',function (sid) {
+    $.ajax({
+		url: "auth/sid.php",
+		type: "POST",
+        data: {
+            sid: sid
+        },
+		cache: false,
+		success: function(dataResult){
+		var dataResult = JSON.parse(dataResult);
+		if(dataResult.statusCode==201){
+            alertify.error('تم منع الإشعارات');
+            location.href = "logout";
+        }
+        }
+    });
+});</script><!-- end webpushr code -->
                                 </body>
 
                                 </html>

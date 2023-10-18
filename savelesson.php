@@ -21,6 +21,7 @@ if ($results->num_rows > 0){
 
 $sql = "UPDATE lessons SET `trim`='$trim', `name`='$name', `description`='$des', `file`='$file', `images`='$imgs', `year`='$year', `div`='$div' WHERE `subject`='$subject' AND `user`='$user' AND `ID`='$id'";
 if ($conn->query($sql) === TRUE) {
+  $lessonid = $id;
   include('sendalert.php');
   echo json_encode(array("statusCode"=>200));
 } else {
@@ -31,6 +32,7 @@ if ($conn->query($sql) === TRUE) {
 
 $sql = "INSERT INTO `lessons`(`subject`, `trim`, `name`, `description`, `file`, `images`, `year`, `div`, `user`, `date`, `time`) VALUES('$subject', '$trim', '$name', '$des', '$file', '$imgs', '$year', '$div', '$user', '$date', '$time')";
 if (mysqli_multi_query($conn, $sql)) {
+        $lessonid = $conn->insert_id;
         include('sendalert.php');
 		echo json_encode(array("statusCode"=>200));
 }else{

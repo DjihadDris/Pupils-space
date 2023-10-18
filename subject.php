@@ -1,11 +1,10 @@
 <?php
 if(!isset($_COOKIE['id'])){
-    header('Location: login');
+    header('Location: login?from='.$_SERVER['REQUEST_URI']);
 }
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
     <head>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5TZY2PZW11"></script>
@@ -17,14 +16,15 @@ if(!isset($_COOKIE['id'])){
   gtag('config', 'G-5TZY2PZW11');
 </script>
         <meta charset="utf-8">
+        <meta name="google-site-verification" content="zoT5Rf9AiWTOzuI6a90el_rX4Q9JeTw92Z6ZFavesug" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="فضاء التلاميذ">
+        <meta name="author" content="Djihad Dris">
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="https://awlyaa.education.gov.dz/public/assets/images/favicon.png">
-        <title>فضاء التلاميذ: الدروس - <?php echo $_GET['id']; ?></title>
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <title>فضاء التلاميذ: الدروس<?php if(isset($_GET['id'])){ ?> - <?php echo $_GET['id']; } ?></title>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.1/css/all.css">
         <!-- Bootstrap Core CSS -->
@@ -36,6 +36,7 @@ if(!isset($_COOKIE['id'])){
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Alexandria&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="effetcs%20-%20Copy.css" rel="stylesheet">
         <!-- include the style -->
@@ -45,26 +46,27 @@ if(!isset($_COOKIE['id'])){
         <!-- include the script -->
         <script src="alert/alertify.js"></script>
         <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
+        alertify.defaults.glossary.title = 'فضاء التلاميذ';
         alertify.defaults.glossary.ok = 'موافق';
         alertify.defaults.glossary.cancel = 'إلغاء';
         alertify.set('notifier','position', 'bottom-right');
         </script>
         <script src="https://cdn.tiny.cloud/1/1pz0lp632p1tc3y9nfmzy0wsl4c2xx0n0bidpi0s53fsc2l6/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-  <script>
+    <script>
     tinymce.init({
       selector: '#description',
       language: 'ar',
       plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-      content_style: "@import url('https://fonts.googleapis.com/css2?family=Alexandria&display=swap'); body { font-family: Alexandria; }",
+      content_style: "@import url('https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap'); body { font-family: Readex Pro; }",
       toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
     });
-  </script>
+    </script>
         <style>
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Alexandria&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap');
             body {
-                font-family: 'IBM Plex Sans Arabic', sans-serif !important;
+                font-family: 'Readex Pro', sans-serif !important;
             }
             a{
                 text-decoration: none;
@@ -73,7 +75,7 @@ if(!isset($_COOKIE['id'])){
                 border-radius: 0% !important;
                 border: none !important;
             }
-            popup_heading_text, notification_title, #webpushrOnBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
+            popup_heading_text, notification_title, #webpushrOnBtn, #webpushrOffBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
                 font-family: 'Alexandria' !important;
             }
 
@@ -84,7 +86,7 @@ display: none;
 }
         </style>
 <!--Form Validation CSS -->
-    <link href="https://ostad.education.gov.dz/public/assets/css/colors/blue.css" id="theme" rel="stylesheet">
+<link href="https://ostad.education.gov.dz/public/assets/css/colors/blue.css" id="theme" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
 
 <!-- ============================================================== -->
@@ -114,18 +116,8 @@ display: none;
     <script src="https://ostad.education.gov.dz/public/assets/plugins/select2/js/select2.min.js"></script>
     <script src="https://ostad.education.gov.dz/public/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 
-        <!-- include the style -->
-        <link rel="stylesheet" href="alert/css/alertify.rtl.css" />
-        <!-- include a theme -->
-        <link rel="stylesheet" href="alert/css/themes/default.rtl.css" />
-        <!-- include the script -->
-        <script src="alert/alertify.js"></script>
-        <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
-        alertify.defaults.glossary.ok = 'موافق';
-        alertify.defaults.glossary.cancel = 'إلغاء';
-        alertify.set('notifier','position', 'bottom-right');
-        </script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
     </head>
 <?php
 include('db.php');
@@ -141,7 +133,7 @@ if("$row[ver]" == "yes"){
     $res = "false";
 }
 ?>
-<body oncontextmenu="return <?php echo $res; ?>;" onload="lessons()" class="fix-header card-no-border">
+<body oncontextmenu="return <?php echo $res; ?>;" onload="lessons('load')" class="fix-header card-no-border">
 <?php
   }}
 ?>
@@ -155,22 +147,26 @@ if("$row[ver]" == "yes"){
         <a href="lessons" class="btn btn-default text-warning">
             <div>الدروس</div>
         </a>
+        <?php if(isset($_GET['id'])){ ?>
         <a href="#" class="btn btn-default text-danger">
             <div><?php echo $_GET['id']; ?></div>
         </a>
         <button class="btn btn-outline-primary" data-toggle="modal" data-backdrop="false" data-target="#addlesson"><i class="fas fa-plus"></i> إضافة درس</button>
+        <?php } ?>
     </div>
 </div>
 
-<div class="row">
-	<div class="col-lg-12">
-		<div class="card">
-			<div class="card-header bg-info">
-				<h4 class="mb-0 text-white"><?php echo $_GET['id']; ?></h4>
-			</div>
-<div class="card-body">
-
-<div class="table-responsive">
+            <div class="row">
+            <?php if(isset($_GET['id'])){ ?>
+	            <div class="col-lg-12">
+	               	<div class="card">
+                        <?php if(isset($_GET['id'])){ ?>
+			            <div class="card-header bg-info">
+			        	<h4 class="mb-0 text-white"><?php echo $_GET['id']; ?></h4>
+			            </div>
+                        <?php } ?>
+                        <div class="card-body">
+                            <div class="table-responsive">
                                 <table id="lessons" data-toggle="table" data-mobile-responsive="true" class="table table-default table-striped table-bordered display" width="100%">
                                     <thead>
                                         <tr class="bg-success" style="color: white !important;">
@@ -178,8 +174,8 @@ if("$row[ver]" == "yes"){
                                             <th scope="col">إسم الدرس</th>
                                             <?php if($_COOKIE['type'] == "admin"){ ?>
                                             <th scope="col">المستوى التعليمي</th>
+                                            <th scope="col"><?php if($_COOKIE['type'] == "admin"){ ?>الجذع/ الشعبة<?php }/*else{if($_COOKIE['year'] == "السنة أولى ثانوي"){echo "الجذع";}else{echo "الشعبة";}}*/ ?></th>
                                             <?php } ?>
-                                            <th scope="col"><?php if($_COOKIE['type'] == "admin"){ ?>الجذع/ الشعبة<?php }else{if($_COOKIE['year'] == "السنة أولى ثانوي"){echo "الجذع";}else{echo "الشعبة";}} ?></th>
                                             <th scope="col">الفصل</th>
                                             <th scope="col">التاريخ</th>
                                             <th scope="col">الوقت</th>
@@ -194,10 +190,10 @@ if("$row[ver]" == "yes"){
                                     </tbody>
                                 </table>	
                             </div>
-
-</div>
-	    </div>
-    </div>
+                        </div>
+	                </div>
+                </div>
+                <?php } ?>
 
 <div class="modal fade" id="addlesson" tabindex="-1" role="dialog" aria-labelledby="addLessonLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -207,23 +203,23 @@ if("$row[ver]" == "yes"){
 		</div>
 		    <div class="modal-body">
 <input type="hidden" id="id">
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">إسم الدرس</label> </div><div class="col-md-9"><input class="form-control" id="name" type="text" required=""></div></div></div></div>
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">إسم الدرس <span style="color: red;">*</span></label> </div><div class="col-md-9"><input class="form-control" id="name" type="text" required=""></div></div></div></div>
 <br>
 <div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">وصف الدرس</label> </div><div class="col-md-9"><textarea class="form-control" id="description" type="text" required=""></textarea></div></div></div></div>
 <br>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">ملف الدرس</label> </div><div class="col-md-9"><input class="form-control" type="file" id="file" accept="application/pdf, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint"><br><br><div class="progress" id="progress2" style="display: none;"><div id="progressbar2" class="progress-bar" style="width: 25%;"></div></div><div id='preview2'></div></div></div></div></div>
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">ملف الدرس</label> </div><div class="col-md-9"><div class="row"><div class="col"><input class="form-control" type="file" id="file" accept="application/pdf, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint"></div><div class="col"><button class="btn btn-danger" onclick="delpreview('preview2')">حذف</button></div></div><br><br><div class="progress" id="progress2" style="display: none;"><div id="progressbar2" class="progress-bar" style="width: 25%;"></div></div><div id='preview2'></div></div></div></div></div>
 <br>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">صور الدرس</label> </div><div class="col-md-9"><input class="form-control" type="file" id="images" accept="image/*"><br><br><div class="progress" id="progress" style="display: none;"><div id="progressbar" class="progress-bar" style="width: 25%;"></div></div><br><div class="row" id='preview'></div></div></div></div></div>
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">صور الدرس</label> </div><div class="col-md-9"><div class="row"><div class="col"><input class="form-control" type="file" id="images" accept="image/*"></div><div class="col"><button class="btn btn-danger" onclick="delpreview('preview')">حذف الكل</button></div></div><br><br><div class="progress" id="progress" style="display: none;"><div id="progressbar" class="progress-bar" style="width: 25%;"></div></div><br><div class="row" id='preview'></div></div></div></div></div>
 <br>
 <?php if($_COOKIE['type'] == "admin"){ ?>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">المستوى التعليمي</label> </div><div class="col-md-9"><select onchange="play()" required id="year" class="form-control">
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">المستوى التعليمي <span style="color: red;">*</span></label> </div><div class="col-md-9"><select onchange="play()" required id="year" class="form-control">
                                                 <option value="">--إختر المستوى التعليمي--</option>
                                                 <option value="السنة أولى ثانوي">السنة أولى ثانوي</option>
                                                 <option value="السنة ثانية ثانوي">السنة ثانية ثانوي</option>
                                                 <option value="السنة ثالثة ثانوي">السنة ثالثة ثانوي</option>
                                                 </select></div></div></div></div>
 <br>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">الجذع/ الشعبة</label> </div><div class="col-md-9"><select required id="div" class="form-control">
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">الجذع/ الشعبة <span style="color: red;">*</span></label> </div><div class="col-md-9"><select required id="div" class="form-control">
                                                 <option value="">--إختر الجذع/ الشعبة--</option>
                                                 <option id="1as1" style="display: none;" value="جذع مشترك علوم وتكنولوجيا">جذع مشترك علوم وتكنولوجيا</option>
                                                 <option id="1as2" style="display: none;" value="جذع مشترك آداب">جذع مشترك آداب</option>
@@ -243,10 +239,10 @@ if("$row[ver]" == "yes"){
 <?php
 }
 ?>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">الفصل</label> </div><div class="col-md-9"><select required id="trim" class="form-control">
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">الفصل <span style="color: red;">*</span></label> </div><div class="col-md-9"><select required id="trim" class="form-control">
                                                 <option value="">--إختر الفصل--</option>
-                                                <option value="الفصل الأول">الفصل الأول</option>
-                                                <option selected value="الفصل الثاني">الفصل الثاني</option>
+                                                <option selected value="الفصل الأول">الفصل الأول</option>
+                                                <option value="الفصل الثاني">الفصل الثاني</option>
                                                 <option value="الفصل الثالث">الفصل الثالث</option>
                                                 </select></div></div></div></div>
             </div>
@@ -265,8 +261,8 @@ if("$row[ver]" == "yes"){
 		<div class="modal-header">
 			<h5 class="modal-title"> عرض الدرس</h5>
 		</div>
-		    <div class="modal-body">
-            <p><span style="color: #1e88e5; font-weight: bold; text-decoration: underline;">إسم الدرس:</span> <span style="color: black;" id="lname"></span></p>
+		    <div class="modal-body" oncontextmenu="return false;" style="user-select: none;">
+            <p><span style="color: #1e88e5; font-weight: bold; text-decoration: underline;">إسم الدرس:</span> <span style="color: black;" id="lname"><span class="text-muted">الرجاء الإنتظار <i class="fa fa-spinner fa-spin"></i></span></span></p>
             <p><span style="color: #1e88e5; font-weight: bold; text-decoration: underline;">وصف الدرس:</span><br><div id="ldes"><span class="text-muted">الرجاء الإنتظار <i class="fa fa-spinner fa-spin"></i></span></div></p>
             <p><span style="color: #1e88e5; font-weight: bold; text-decoration: underline;">ملف الدرس:</span><br><div id="lfile"><span class="text-muted">الرجاء الإنتظار <i class="fa fa-spinner fa-spin"></i></span></div></p>
             <p><span style="color: #1e88e5; font-weight: bold; text-decoration: underline;">صور الدرس:</span><br><div class="row" id="limgs"><span class="text-muted">الرجاء الإنتظار <i class="fa fa-spinner fa-spin"></i></span></div></p>
@@ -286,10 +282,70 @@ if("$row[ver]" == "yes"){
 <script src="changepass.js"></script>
 
 <script>
+<?php
+if(isset($_GET['lessonid'])){
+?>
+$('#viewlesson').modal('show');
+$.ajax({
+		url: "viewlesson.php",
+		type: "POST",
+        data: {
+            id: <?php echo $_GET['lessonid'] ?>
+        },
+		cache: false,	
+		success: function(dataResult){
+            var dataResult = JSON.parse(dataResult);
+            if(dataResult.statusCode == 200){
+            $("#lname").html(dataResult.name);
+            if(dataResult.des != ""){
+            $("#ldes").html(dataResult.des);
+            }else{
+            $("#ldes").html('لم يتم إضافة وصف الدرس..');
+            }
+            if(dataResult.file != ""){
+            $("#lfile").html(dataResult.file);
+            }else{
+            $("#lfile").html('لم يتم إضافة ملف الدرس..');
+            }
+            if(dataResult.imgs != ""){
+            $("#limgs").html(dataResult.imgs);
+            }else{
+            $("#limgs").html('لم يتم إضافة صور الدرس..');
+            }
+            }else{
+            location.href = "/lessons";
+            }
+        }
+});
+
+<?php
+if(!isset($_GET['id'])){
+?>
+
+$("#viewlesson").on("hidden.bs.modal", function () {
+    location.href = "/lessons";
+});
+
+<?php
+}
+}
+?>
+
+function delpreview(preview){
+alertify.confirm("هل تريد الحذف حقا؟",
+  function(){
+document.getElementById(preview).innerHTML = "";
+if(preview == "preview2"){
+document.getElementById('file').style.display = "";
+}
+  },
+  function(){
+    alertify.error('إلغاء');
+  });
+}
 
 function edit(id, trim, name, year, div){
 
-$('#addlesson').modal('show');
 $('#id').val(id);
 $('#trim').val(trim);
 $('#name').val(name);
@@ -303,6 +359,7 @@ id: id
 cache: false,	
 success: function(dataResult){
 var dataResult = JSON.parse(dataResult);
+$('#addlesson').modal('show');
 tinymce.activeEditor.setContent(dataResult.des);
 $('#preview2').html(dataResult.file);
 $('#preview').html(dataResult.imgs);
@@ -323,12 +380,14 @@ $(document).ready(function(){
     var ext = $(this).val().split('.').pop().toLowerCase();
     if ($.inArray(ext, ['png','jpg','jpeg']) == -1)   {
         alertify.error("يسمح فقط بصور JPG ،PNG وJPEG");
+        document.getElementById('progress').style.display = "none";
         return;
     }  
     var picsize = (file_data.size);
     if(picsize > 10000000) /*10MB*/
         {
             alertify.error("يسمح للصورة أقل من 10 ميغا بايت");
+            document.getElementById('progress').style.display = "none";
             return;
         }
     form_data.append('file', file_data);   
@@ -356,7 +415,7 @@ $(document).ready(function(){
         }
      });
 });
-})
+});
 
 $(document).ready(function(){
     $('#file').on('change', function() {
@@ -367,12 +426,14 @@ $(document).ready(function(){
     var ext = $(this).val().split('.').pop().toLowerCase();
     if ($.inArray(ext, ['docx','doc','xlsx','xls','pdf','pptx','ppt']) == -1)   {
         alertify.error("يسمح فقط بملفات PDF ،Word ،PowerPoint وExcel");
+        document.getElementById('progress2').style.display = "none";
         return;
     }  
     var picsize = (file_data.size);
     if(picsize > 10000000) /*10MB*/
         {
             alertify.error("يسمح للملفات أقل من 10 ميغا بايت");
+            document.getElementById('progress2').style.display = "none";
             return;
         }
     form_data.append('file', file_data);   
@@ -401,7 +462,7 @@ $(document).ready(function(){
         }
      });
 });
-})
+});
 
 function play(){
                                     var val = document.getElementById('year').value;
@@ -461,7 +522,8 @@ $.ajax({
 		var dataResult = JSON.parse(dataResult);
 		if(dataResult.statusCode==200){
             alertify.success('تم حذف الدرس بنجاح');
-            location.reload();
+            /*location.reload();*/
+            lessons('');
         }else if(dataResult.statusCode==201){
             alertify.error('تعذّر حذف الدرس');
         }
@@ -471,13 +533,11 @@ $.ajax({
   function(){
     alertify.error('إلغاء');
   });
-
 }
 
 function view(id){
 
 $('#viewlesson').modal('show');
-
 $.ajax({
 		url: "viewlesson.php",
 		type: "POST",
@@ -486,7 +546,7 @@ $.ajax({
         },
 		cache: false,	
 		success: function(dataResult){
-        var dataResult = JSON.parse(dataResult);
+            var dataResult = JSON.parse(dataResult);
             $("#lname").html(dataResult.name);
             if(dataResult.des != ""){
             $("#ldes").html(dataResult.des);
@@ -508,6 +568,7 @@ $.ajax({
 
 }
 
+<?php if(isset($_GET['id'])){ ?>
 function savedata(){
 
 var id = document.getElementById('id').value;
@@ -544,17 +605,22 @@ if(name != ""){
 		cache: false,
         beforeSend: function() {
 			$('#savedatebtn').html('<i class="fa fa-spinner fa-spin"></i>');
+            document.getElementById('savedatebtn').disabled = true;
 		},	
 		success: function(dataResult){
 		var dataResult = JSON.parse(dataResult);
 		if(dataResult.statusCode==200){
-            $('#savedatebtn').html('حفظ');
+            $('#addlesson').modal('hide');
             alertify.success('تم حفظ الدرس بنجاح');
-			$('#addlesson').modal('hide');
-			location.reload();	
+			/*location.reload();*/
+            lessons('');
+            $('#id').val('');
+            document.getElementById('savedatebtn').disabled = false;
+            $('#savedatebtn').html('حفظ');
         }else if(dataResult.statusCode==201){
             $('#savedatebtn').html('حفظ');
             alertify.error('تعذّر حفظ الدرس');
+            document.getElementById('savedatebtn').disabled = false;
         }
         }
     });
@@ -574,8 +640,10 @@ if(name != ""){
     alertify.error('الرجاء إدخال إسم الدرس');
 }
 }
+<?php } ?>
 
-function lessons(){
+function lessons(load){
+<?php if(isset($_GET['id'])){ ?>
     $.ajax({
 		url: "getlessons.php",
 		type: "POST",
@@ -584,13 +652,17 @@ function lessons(){
         },
 		cache: false,
 		success: function(data){
-		$('#content').html(data); 
+		$('#content').html(data);
+        if(load == "load"){ 
         table.call();
+        }
 		}
 	});
+<?php } ?>
 }
 
 function table(){
+<?php if(isset($_GET['id'])){ ?>
 $('#lessons').DataTable({
     ordering: true,
     searching: true,
@@ -629,8 +701,9 @@ $('#lessons').DataTable({
 	dom: "<'row'<'col-sm-10'f><'col-sm-2'B>>" +
 	"<'row'<'col-sm-12'tr>>" +
 	"<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        <?php if($_COOKIE['type'] == "admin"){ ?>
-        buttons: [{
+        buttons: [
+            <?php if($_COOKIE['type'] == "admin"){ ?>
+            {
 			  extend: 'excel',			  
               text: '<i class="fa fa-file-excel"></i> تحميل',
               className: 'btn-outline-info btn-sm',
@@ -639,6 +712,7 @@ $('#lessons').DataTable({
 					columns: [':not(:last-child)']
 				}
             },
+            <?php } ?>
             {
 			  extend: 'print',			  
               text: '<i class="fa fa-print"></i> طباعة',
@@ -652,23 +726,27 @@ $('#lessons').DataTable({
                 },
             }
 		]
-        <?php }else{
-        ?>
-        
-        "dom": 'T<"clear">lfrtip',
-        "tableTools": {
-        "aButtons": [
-            "copy",
-            "save"
-          ]
-        }
-
-        <?php
-        } ?>
-        });
+});
+<?php } ?>
 }
 </script>
-<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });</script><!-- end webpushr code -->
-                                </body>
-
-                                </html>
+<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });
+webpushr('fetch_id',function (sid) {
+    $.ajax({
+		url: "auth/sid.php",
+		type: "POST",
+        data: {
+            sid: sid
+        },
+		cache: false,
+		success: function(dataResult){
+		var dataResult = JSON.parse(dataResult);
+		if(dataResult.statusCode==201){
+            alertify.error('تم منع الإشعارات');
+            location.href = "logout";
+        }
+        }
+    });
+});</script><!-- end webpushr code -->
+</body>
+</html>

@@ -13,7 +13,7 @@ $email = "";
 if($_POST['email'] != ""){
     $email = "VALUES ('$_COOKIE[id]', 'البريد الإلكتروني', '$_POST[email]', 'في الإنتظار', '$date', '$time')";
 }else{
-    $email = "VALUES ('ds', 'dsf', 'sdf', 'dsfs', 'sd', 'dsf')";
+    $email = "VALUES ('', '', '', '', '', '')";
 }
 
 $fn = "";

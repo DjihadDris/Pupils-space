@@ -1,6 +1,6 @@
 <?php
 if(!isset($_COOKIE['id'])){
-    header('Location: login');
+    header('Location: login?from=lessons');
 }
 ?>
 <!DOCTYPE html>
@@ -17,13 +17,14 @@ if(!isset($_COOKIE['id'])){
   gtag('config', 'G-5TZY2PZW11');
 </script>
         <meta charset="utf-8">
+        <meta name="google-site-verification" content="zoT5Rf9AiWTOzuI6a90el_rX4Q9JeTw92Z6ZFavesug" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="فضاء التلاميذ">
+        <meta name="author" content="Djihad Dris">
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="https://awlyaa.education.gov.dz/public/assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
         <title>فضاء التلاميذ: الدروس</title>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.1/css/all.css">
@@ -36,6 +37,7 @@ if(!isset($_COOKIE['id'])){
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Alexandria&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="effetcs%20-%20Copy.css" rel="stylesheet">
         <!-- include the style -->
@@ -45,7 +47,7 @@ if(!isset($_COOKIE['id'])){
         <!-- include the script -->
         <script src="alert/alertify.js"></script>
         <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
+        alertify.defaults.glossary.title = 'فضاء التلاميذ';
         alertify.defaults.glossary.ok = 'موافق';
         alertify.defaults.glossary.cancel = 'إلغاء';
         alertify.set('notifier','position', 'bottom-right');
@@ -53,8 +55,9 @@ if(!isset($_COOKIE['id'])){
         <style>
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Alexandria&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap');
             body {
-                font-family: 'IBM Plex Sans Arabic', sans-serif !important;
+                font-family: 'Readex Pro', sans-serif !important;
             }
             a{
                 text-decoration: none;
@@ -63,7 +66,7 @@ if(!isset($_COOKIE['id'])){
                 border-radius: 0% !important;
                 border: none !important;
             }
-            popup_heading_text, notification_title, #webpushrOnBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
+            popup_heading_text, notification_title, #webpushrOnBtn, #webpushrOffBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
                 font-family: 'Alexandria' !important;
             }
 
@@ -103,19 +106,6 @@ display: none;
     <script src="https://ostad.education.gov.dz/public/assets/plugins/icheck/icheck.init.js"></script>
     <script src="https://ostad.education.gov.dz/public/assets/plugins/select2/js/select2.min.js"></script>
     <script src="https://ostad.education.gov.dz/public/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-
-        <!-- include the style -->
-        <link rel="stylesheet" href="alert/css/alertify.rtl.css" />
-        <!-- include a theme -->
-        <link rel="stylesheet" href="alert/css/themes/default.rtl.css" />
-        <!-- include the script -->
-        <script src="alert/alertify.js"></script>
-        <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
-        alertify.defaults.glossary.ok = 'موافق';
-        alertify.defaults.glossary.cancel = 'إلغاء';
-        alertify.set('notifier','position', 'bottom-right');
-        </script>
     </head>
 
 <body class="fix-header card-no-border">
@@ -210,7 +200,7 @@ if($_COOKIE['type'] == "admin" OR $_COOKIE['div'] == "علوم تجريبية" O
 }
 ?>
         <div class="col">
-        <a href="subject?id=التربية الإسلامية">
+        <a href="subject?id=العلوم الإسلامية">
           <div class="card shadow-sm">      
 <img class="bd-placeholder-img card-img-top" src="scovers/img8.png" width="100%" height="200">
           </div>
@@ -333,7 +323,24 @@ function ver(ver, id){
     });
 }
 </script>
-<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });</script><!-- end webpushr code -->
+<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });
+webpushr('fetch_id',function (sid) {
+    $.ajax({
+		url: "auth/sid.php",
+		type: "POST",
+        data: {
+            sid: sid
+        },
+		cache: false,
+		success: function(dataResult){
+		var dataResult = JSON.parse(dataResult);
+		if(dataResult.statusCode==201){
+            alertify.error('تم منع الإشعارات');
+            location.href = "logout";
+        }
+        }
+    });
+});</script><!-- end webpushr code -->
                                 </body>
 
                                 </html>

@@ -16,7 +16,7 @@ if ($conn->query($sqls) === TRUE) {
   echo json_encode(array("status"=>201));
 }
 }else{
-$sqls = "UPDATE students SET auth='no', secret='$secret' WHERE ID='$_COOKIE[id]'";
+$sqls = "UPDATE students SET auth='', secret='' WHERE ID='$_COOKIE[id]'";
 
 if ($conn->query($sqls) === TRUE) {
   echo json_encode(array("status"=>200));

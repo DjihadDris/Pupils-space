@@ -1,6 +1,6 @@
 <?php
 if(!isset($_COOKIE['id'])){
-    header('Location: login');
+    header('Location: login?from=students');
 }
 ?>
 <!DOCTYPE html>
@@ -17,13 +17,14 @@ if(!isset($_COOKIE['id'])){
   gtag('config', 'G-5TZY2PZW11');
 </script>
         <meta charset="utf-8">
+        <meta name="google-site-verification" content="zoT5Rf9AiWTOzuI6a90el_rX4Q9JeTw92Z6ZFavesug" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="فضاء التلاميذ">
+        <meta name="author" content="Djihad Dris">
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="https://awlyaa.education.gov.dz/public/assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
         <title>فضاء التلاميذ: التلاميذ</title>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.1/css/all.css">
@@ -36,6 +37,7 @@ if(!isset($_COOKIE['id'])){
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Alexandria&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="effetcs%20-%20Copy.css" rel="stylesheet">
         <!-- include the style -->
@@ -45,7 +47,7 @@ if(!isset($_COOKIE['id'])){
         <!-- include the script -->
         <script src="alert/alertify.js"></script>
         <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
+        alertify.defaults.glossary.title = 'فضاء التلاميذ';
         alertify.defaults.glossary.ok = 'موافق';
         alertify.defaults.glossary.cancel = 'إلغاء';
         alertify.set('notifier','position', 'bottom-right');
@@ -53,8 +55,9 @@ if(!isset($_COOKIE['id'])){
         <style>
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Alexandria&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap');
             body {
-                font-family: 'IBM Plex Sans Arabic', sans-serif !important;
+                font-family: 'Readex Pro', sans-serif !important;
             }
             a{
                 text-decoration: none;
@@ -63,7 +66,7 @@ if(!isset($_COOKIE['id'])){
                 border-radius: 0% !important;
                 border: none !important;
             }
-            popup_heading_text, notification_title, #webpushrOnBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
+            popup_heading_text, notification_title, #webpushrOnBtn, #webpushrOffBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
                 font-family: 'Alexandria' !important;
             }
 
@@ -103,22 +106,9 @@ display: none;
     <script src="https://ostad.education.gov.dz/public/assets/plugins/icheck/icheck.init.js"></script>
     <script src="https://ostad.education.gov.dz/public/assets/plugins/select2/js/select2.min.js"></script>
     <script src="https://ostad.education.gov.dz/public/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-
-        <!-- include the style -->
-        <link rel="stylesheet" href="alert/css/alertify.rtl.css" />
-        <!-- include a theme -->
-        <link rel="stylesheet" href="alert/css/themes/default.rtl.css" />
-        <!-- include the script -->
-        <script src="alert/alertify.js"></script>
-        <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
-        alertify.defaults.glossary.ok = 'موافق';
-        alertify.defaults.glossary.cancel = 'إلغاء';
-        alertify.set('notifier','position', 'bottom-right');
-        </script>
     </head>
 
-<body onload="students()" class="fix-header card-no-border">
+<body onload="students('load')" class="fix-header card-no-border">
 
 <div id="main-wrapper">
 <?php include('navbar.php'); ?>
@@ -152,14 +142,14 @@ display: none;
                                             <th scope="col">تاريخ الميلاد</th>
                                             <?php if($_COOKIE['type'] == "admin"){ ?>
                                             <th scope="col">المستوى التعليمي</th>
+                                            <th scope="col"><?php if($_COOKIE['type'] == "admin"){echo "الجذع/ الشعبة";}/*else{if($_COOKIE['year'] == "السنة أولى ثانوي"){echo "الجذع";}else{echo "الشعبة";}}*/ ?></th>
                                             <?php } ?>
-                                            <th scope="col"><?php if($_COOKIE['type'] == "admin"){echo "الجذع/ الشعبة";}else{if($_COOKIE['year'] == "السنة أولى ثانوي"){echo "الجذع";}else{echo "الشعبة";}} ?></th>
                                             <?php if($_COOKIE['type'] == "admin"){ ?>
                                             <th scope="col">البريد الإلكتروني</th>
                                             <th scope="col">كلمة المرور</th>
                                             <th scope="col">وضعية الحساب</th>
                                             <?php } ?>
-                                            <th scope="col">حالة الحساب</th>
+                                            <!--<th scope="col">حالة الحساب</th>-->
                                             <?php if($_COOKIE['type'] == "admin"){ ?>
                                             <th scope="col">نوع الحساب</th>
                                             <th scope="col">آخر تسجيل دخول</th>
@@ -186,36 +176,40 @@ display: none;
 		    <div class="modal-body">
             <input type="hidden" id="idedit">
 
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">إسم المستخدم</label> </div><div class="col-md-9"><input class="form-control" id="useredit" type="text" required=""></div></div></div></div>
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">إسم المستخدم <span style="color: red;">*</span></label> </div><div class="col-md-9"><input class="form-control" id="useredit" type="text" required=""></div></div></div></div>
 <br>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">اللقب</label> </div><div class="col-md-9"><input class="form-control" id="fnedit" type="text" required=""></div></div></div></div>
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">اللقب <span style="color: red;">*</span></label> </div><div class="col-md-9"><input class="form-control" id="fnedit" type="text" required=""></div></div></div></div>
 <br>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">الإسم</label> </div><div class="col-md-9"><input class="form-control" id="nameedit" type="text" required=""></div></div></div></div>
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">الإسم <span style="color: red;">*</span></label> </div><div class="col-md-9"><input class="form-control" id="nameedit" type="text" required=""></div></div></div></div>
 <br>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">الجنس</label> </div><div class="col-md-9"><input class="form-control" id="genderedit" type="text" required=""></div></div></div></div>
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">الجنس <span style="color: red;">*</span></label> </div><div class="col-md-9"><select required id="genderedit" class="form-control">
+                                                <option value="">--إختر الجنس--</option>
+                                                <option value="ذكر">ذكر</option>
+                                                <option value="أنثى">أنثى</option>
+                                                </select></div></div></div></div>
 <br>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">تاريخ الميلاد</label> </div><div class="col-md-9"><input class="form-control" id="dobedit" type="text" required=""></div></div></div></div>
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">تاريخ الميلاد <span style="color: red;">*</span></label> </div><div class="col-md-9"><input class="form-control" id="dobedit" type="text" required=""></div></div></div></div>
 <br>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">المستوى التعليمي</label> </div><div class="col-md-9"><select required id="yearedit" class="form-control">
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">المستوى التعليمي <span style="color: red;">*</span></label> </div><div class="col-md-9"><select onchange="play()" required id="yearedit" class="form-control">
                                                 <option value="">--إختر المستوى التعليمي--</option>
                                                 <option value="السنة أولى ثانوي">السنة أولى ثانوي</option>
                                                 <option value="السنة ثانية ثانوي">السنة ثانية ثانوي</option>
                                                 <option value="السنة ثالثة ثانوي">السنة ثالثة ثانوي</option>
                                                 </select></div></div></div></div>
 <br>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">الجذع/ الشعبة</label> </div><div class="col-md-9"><select required id="divedit" class="form-control">
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">الجذع/ الشعبة <span style="color: red;">*</span></label> </div><div class="col-md-9"><select required id="divedit" class="form-control">
                                                 <option value="">--إختر الجذع/ الشعبة--</option>
-                                                <option id="1as1" value="جذع مشترك علوم وتكنولوجيا">جذع مشترك علوم وتكنولوجيا</option>
-                                                <option id="1as2" value="جذع مشترك آداب">جذع مشترك آداب</option>
-                                                <option id="as1" value="علوم تجريبية">علوم تجريبية</option>
-                                                <option id="as2" value="رياضيات">رياضيات</option>
-                                                <option id="as3" value="تقني رياضي">تقني رياضي</option>
-                                                <option id="as4" value="تسيير وإقتصاد">تسيير وإقتصاد</option>
-                                                <option id="as5" value="آداب ولغات أجنبية">آداب ولغات أجنبية</option>
-                                                <option id="as6" value="آداب وفلسفة">آداب وفلسفة</option>
+                                                <option id="1as1" style="display: none;" value="جذع مشترك علوم وتكنولوجيا">جذع مشترك علوم وتكنولوجيا</option>
+                                                <option id="1as2" style="display: none;" value="جذع مشترك آداب">جذع مشترك آداب</option>
+                                                <option id="as1" style="display: none;" value="علوم تجريبية">علوم تجريبية</option>
+                                                <option id="as2" style="display: none;" value="رياضيات">رياضيات</option>
+                                                <option id="as3" style="display: none;" value="تقني رياضي">تقني رياضي</option>
+                                                <option id="as4" style="display: none;" value="تسيير وإقتصاد">تسيير وإقتصاد</option>
+                                                <option id="as5" style="display: none;" value="آداب ولغات أجنبية">آداب ولغات أجنبية</option>
+                                                <option id="as6" style="display: none;" value="آداب وفلسفة">آداب وفلسفة</option>
                                                 </select></div></div></div></div>
 <br>
-<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">البريد الإلكتروني</label> </div><div class="col-md-9"><input class="form-control" id="emailedit" type="text" required=""></div></div></div></div>
+<div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-md-3"><label class="control-label text-right col-md-3">البريد الإلكتروني <span style="color: red;">*</span></label> </div><div class="col-md-9"><input class="form-control" id="emailedit" type="text" required=""></div></div></div></div>
 
             </div>
 			<div class="modal-footer">
@@ -270,17 +264,21 @@ var email = document.getElementById('emailedit').value;
 		cache: false,
         beforeSend: function() {
 			$('#savedatebtn').html('<i class="fa fa-spinner fa-spin"></i>');
+            document.getElementById('savedatebtn').disabled = true;
 		},	
 		success: function(dataResult){
 		var dataResult = JSON.parse(dataResult);
 		if(dataResult.statusCode==200){
-            $('#savedatebtn').html('حفظ التعديلات');
+            $('#editModal').modal('hide');
             alertify.success('تم حفظ التعديلات بنجاح');
-			$('#editModal').modal('hide');
-			location.reload();	
+			/*location.reload();*/
+            students('');
+            document.getElementById('savedatebtn').disabled = false;
+            $('#savedatebtn').html('حفظ التعديلات');
         }else if(dataResult.statusCode==201){
             $('#savedatebtn').html('حفظ التعديلات');
             alertify.error('تعذّر حفظ التعديلات');
+            document.getElementById('savedatebtn').disabled = false;
         }
         }
     });
@@ -299,14 +297,16 @@ function showpass(id, password){
     }
 }
 
-function students(){
+function students(load){
     $.ajax({
 		url: "getstudents.php",
 		type: "POST",
 		cache: false,
 		success: function(data){
-		$('#students').html(data); 
+		$('#students').html(data);
+        if(load == "load"){
         table.call();
+        }
 		}
 	});
 }
@@ -332,6 +332,7 @@ $.ajax({
 		success: function(dataResult){
 		var dataResult = JSON.parse(dataResult);
 		if(dataResult.statusCode==200){
+            $('#editModal').modal('show');
             document.getElementById('idedit').value = id;
             user.value = dataResult.user;
             fn.value = dataResult.fn;
@@ -339,7 +340,8 @@ $.ajax({
             dob.value = dataResult.dob;
             gender.value = dataResult.gender;
             year.value = dataResult.year;
-            div.value = dataResult.div;
+            play.call();
+            setTimeout(function(){div.value = dataResult.div;}, 500);
             email.value = dataResult.email;
         }else if(dataResult.statusCode==201){
             alertify.error('تعذّر جلب البيانات');
@@ -363,7 +365,8 @@ function del(id, fn, name){
 		var dataResult = JSON.parse(dataResult);
 		if(dataResult.statusCode==200){
             alertify.success('تمت العملية بنجاح');
-            location.reload();
+            /*location.reload();*/
+            students('');
         }else if(dataResult.statusCode==201){
             alertify.error('تعذّر إتمام العملية');
         }
@@ -394,7 +397,8 @@ function grade(grade, id){
 		var dataResult = JSON.parse(dataResult);
 		if(dataResult.statusCode==200){
             alertify.success('تمت العملية بنجاح');
-            location.reload();
+            /*location.reload();*/
+            students('');
         }else if(dataResult.statusCode==201){
             alertify.error('تعذّر إتمام العملية');
         }
@@ -421,7 +425,8 @@ function status(status, id){
 		var dataResult = JSON.parse(dataResult);
 		if(dataResult.statusCode==200){
             alertify.success('تمت العملية بنجاح');
-            location.reload();
+            /*location.reload();*/
+            students('');
         }else if(dataResult.statusCode==201){
             alertify.error('تعذّر إتمام العملية');
         }
@@ -448,12 +453,57 @@ function ver(ver, id){
 		var dataResult = JSON.parse(dataResult);
 		if(dataResult.statusCode==200){
             alertify.success('تمت العملية بنجاح');
-            location.reload();
+            /*location.reload();*/
+            students('');
         }else if(dataResult.statusCode==201){
             alertify.error('تعذّر إتمام العملية');
         }
         }
     });
+}
+
+function play(){
+                                    var val = document.getElementById('yearedit').value;
+                                    var div = document.getElementById('divedit');
+                                    var oas1 = document.getElementById('1as1');
+                                    var oas2 = document.getElementById('1as2');
+                                    var as1 = document.getElementById('as1');
+                                    var as2 = document.getElementById('as2');
+                                    var as3 = document.getElementById('as3');
+                                    var as4 = document.getElementById('as4');
+                                    var as5 = document.getElementById('as5');
+                                    var as6 = document.getElementById('as6');
+                                    if(val == "السنة أولى ثانوي"){
+                                        div.value = "";
+                                        oas1.style.display = "";
+                                        oas2.style.display = "";
+                                        as1.style.display = "none";
+                                        as2.style.display = "none";
+                                        as3.style.display = "none";
+                                        as4.style.display = "none";
+                                        as5.style.display = "none";
+                                        as6.style.display = "none";
+                                    }else if(val == "السنة ثانية ثانوي" || val == "السنة ثالثة ثانوي"){
+                                        div.value = "";
+                                        oas1.style.display = "none";
+                                        oas2.style.display = "none";
+                                        as1.style.display = "";
+                                        as2.style.display = "";
+                                        as3.style.display = "";
+                                        as4.style.display = "";
+                                        as5.style.display = "";
+                                        as6.style.display = "";
+                                    }else{
+                                        div.value = "";
+                                        oas1.style.display = "none";
+                                        oas2.style.display = "none";
+                                        as1.style.display = "none";
+                                        as2.style.display = "none";
+                                        as3.style.display = "none";
+                                        as4.style.display = "none";
+                                        as5.style.display = "none";
+                                        as6.style.display = "none";
+                                    }
 }
 
 function table(){
@@ -502,7 +552,7 @@ $('#eleves').DataTable({
               className: 'btn-outline-info btn-sm',
  			  title: 'قوائم بيانات التلاميذ',
 			   exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14]
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13/*, 14*/]
 				    /*columns: [':not(:last-child)']*/
 				}
             },
@@ -512,7 +562,7 @@ $('#eleves').DataTable({
               className: 'btn-outline-info btn-sm',
  			  title: 'قوائم بيانات التلاميذ',
 			   exportOptions: {
-					columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14]
+					columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13/*, 14*/]
                     /*columns: [':visible :not(:last-child)']*/
 				},
                customize: function ( win ) {
@@ -520,23 +570,28 @@ $('#eleves').DataTable({
                 },
             }
 		]
-        <?php }else{
-        ?>
-        
-        "dom": 'T<"clear">lfrtip',
-        "tableTools": {
-        "aButtons": [
-            "copy",
-            "save"
-          ]
-        }
-
-        <?php
-        } ?>
+        <?php } ?>
         });
 }
 </script>
-<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });</script><!-- end webpushr code -->
+<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });
+webpushr('fetch_id',function (sid) {
+    $.ajax({
+		url: "auth/sid.php",
+		type: "POST",
+        data: {
+            sid: sid
+        },
+		cache: false,
+		success: function(dataResult){
+		var dataResult = JSON.parse(dataResult);
+		if(dataResult.statusCode==201){
+            alertify.error('تم منع الإشعارات');
+            location.href = "logout";
+        }
+        }
+    });
+});</script><!-- end webpushr code -->
                                 </body>
 
                                 </html>

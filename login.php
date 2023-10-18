@@ -22,14 +22,34 @@ $sqls = "UPDATE students SET ip='$ip', date='$date', time='$time', ldate='$date'
 if ($conn->query($sqls) === TRUE) {
     if("$row[auth]" == "yes"){
   $secret = "$row[secret]";
-  header('Location: otp?secret='.$secret);
+  if(isset($_GET['from'])){
+      $from = $_GET['from'];
+      if(isset($_GET['lessonid'])){
+          $lessonid = $_GET['lessonid'];
+          header('Location: otp?secret='.$secret.'&from='.$from.'&lessonid='.$lessonid);
+      }else{
+          header('Location: otp?secret='.$secret.'&from='.$from);
+      }
+  }else{
+      header('Location: otp?secret='.$secret);
+  }
     }else{
   setcookie("id", "$row[ID]", time() + (86400 * 30), "/");
-  setcookie("name", "$row[name]", time() + (86400 * 30), "/");
+  setcookie("name", "$row[user]", time() + (86400 * 30), "/");
   setcookie("year", "$row[year]", time() + (86400 * 30), "/");
   setcookie("div", "$row[div]", time() + (86400 * 30), "/");
   setcookie("type", "$row[type]", time() + (86400 * 30), "/");
-  header('Location: /');
+  if(isset($_GET['from'])){
+      $from = $_GET['from'];
+      if(isset($_GET['lessonid'])){
+          $lessonid = $_GET['lessonid'];
+          header('Location: '.$from.'&lessonid='.$lessonid);
+      }else{
+          header('Location: '.$from);
+      }
+  }else{
+      header('Location: /');
+  }
     }
 } else {
   header('Location: login?false=error');
@@ -55,13 +75,14 @@ $conn->close();
   gtag('config', 'G-5TZY2PZW11');
 </script>
         <meta charset="utf-8">
+        <meta name="google-site-verification" content="zoT5Rf9AiWTOzuI6a90el_rX4Q9JeTw92Z6ZFavesug" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="ثانوية صولاج السعيد: فضاء التلاميذ">
+        <meta name="description" content="فضاء التلاميذ">
         <meta name="author" content="Djihad Dris">
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="https://awlyaa.education.gov.dz/public/assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
         <title>فضاء التلاميذ: تسجيل الدخول</title>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
@@ -83,7 +104,7 @@ $conn->close();
         <!-- include the script -->
         <script src="alert/alertify.js"></script>
         <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
+        alertify.defaults.glossary.title = 'فضاء التلاميذ';
         alertify.defaults.glossary.ok = 'موافق';
         alertify.defaults.glossary.cancel = 'إلغاء';
         alertify.set('notifier','position', 'bottom-right');
@@ -155,7 +176,7 @@ $conn->close();
                 <div class="login-box card">
                     <div class="card-body animated fadeInDown">
                         <div class="form-group row">
-                            <img style="width: 280px;" class="centered image" src="souledj.png" alt="ثانوية صولاج السعيد">
+                            <img style="width: 280px;" class="centered image" src="souledj.png" alt="فضاء التلاميذ">
                         </div>
                         <br>
 <?php
@@ -175,7 +196,7 @@ if($_GET['false'] == "error"){
 <?php
 }else{
 ?>
-<div class='alert alert-success'><span style="font-family: Alexandria !important;">ثانوية صولاج السعيد: فضاء التلاميذ</span></div>
+<div class='alert alert-success'><span style="font-family: Alexandria !important;">فضاء التلاميذ</span></div>
 <?php
 }
 ?>
@@ -185,7 +206,7 @@ if($_GET['false'] == "error"){
                                         <div class="col-sm-12">
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fas fa-user"></i></div>
-                                                <input required type="text" id="user" name="user" class="form-control" placeholder="إسم المستخدم" required>
+                                                <input autofocus required type="text" id="user" name="user" class="form-control" placeholder="إسم المستخدم" required>
                                             </div>
                                         </div>
                                     </div>

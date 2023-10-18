@@ -1,6 +1,6 @@
 <?php
-if(!isset($_COOKIE['id']) && $_COOKIE['type'] == "admin"){
-    header('Location: login');
+if(!isset($_COOKIE['id'])){
+    header('Location: login?from=orders');
 }
 ?>
 <!DOCTYPE html>
@@ -17,13 +17,14 @@ if(!isset($_COOKIE['id']) && $_COOKIE['type'] == "admin"){
   gtag('config', 'G-5TZY2PZW11');
 </script>
         <meta charset="utf-8">
+        <meta name="google-site-verification" content="zoT5Rf9AiWTOzuI6a90el_rX4Q9JeTw92Z6ZFavesug" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="فضاء التلاميذ">
+        <meta name="author" content="Djihad Dris">
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="https://awlyaa.education.gov.dz/public/assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
         <title>فضاء التلاميذ: الطلبات</title>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.1/css/all.css">
@@ -36,6 +37,7 @@ if(!isset($_COOKIE['id']) && $_COOKIE['type'] == "admin"){
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Alexandria&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="effetcs%20-%20Copy.css" rel="stylesheet">
         <!-- include the style -->
@@ -45,7 +47,7 @@ if(!isset($_COOKIE['id']) && $_COOKIE['type'] == "admin"){
         <!-- include the script -->
         <script src="alert/alertify.js"></script>
         <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
+        alertify.defaults.glossary.title = 'فضاء التلاميذ';
         alertify.defaults.glossary.ok = 'موافق';
         alertify.defaults.glossary.cancel = 'إلغاء';
         alertify.set('notifier','position', 'bottom-right');
@@ -53,8 +55,9 @@ if(!isset($_COOKIE['id']) && $_COOKIE['type'] == "admin"){
         <style>
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Alexandria&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap');
             body {
-                font-family: 'IBM Plex Sans Arabic', sans-serif !important;
+                font-family: 'Readex Pro', sans-serif !important;
             }
             a{
                 text-decoration: none;
@@ -63,7 +66,7 @@ if(!isset($_COOKIE['id']) && $_COOKIE['type'] == "admin"){
                 border-radius: 0% !important;
                 border: none !important;
             }
-            popup_heading_text, notification_title, #webpushrOnBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
+            popup_heading_text, notification_title, #webpushrOnBtn, #webpushrOffBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
                 font-family: 'Alexandria' !important;
             }
 
@@ -103,19 +106,6 @@ display: none;
     <script src="https://ostad.education.gov.dz/public/assets/plugins/icheck/icheck.init.js"></script>
     <script src="https://ostad.education.gov.dz/public/assets/plugins/select2/js/select2.min.js"></script>
     <script src="https://ostad.education.gov.dz/public/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-
-        <!-- include the style -->
-        <link rel="stylesheet" href="alert/css/alertify.rtl.css" />
-        <!-- include a theme -->
-        <link rel="stylesheet" href="alert/css/themes/default.rtl.css" />
-        <!-- include the script -->
-        <script src="alert/alertify.js"></script>
-        <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
-        alertify.defaults.glossary.ok = 'موافق';
-        alertify.defaults.glossary.cancel = 'إلغاء';
-        alertify.set('notifier','position', 'bottom-right');
-        </script>
     </head>
 
 <body class="fix-header card-no-border">
@@ -149,6 +139,11 @@ display: none;
 					<li class="nav-item">
 						<a href="#vers" data-toggle="tab" aria-expanded="false" class="nav-link">
 							<span class="d-none d-lg-block"><i class="fas fa-check"></i> طلبات التوثيق</span>
+						</a>
+					</li>
+                    <li class="nav-item">
+						<a href="#book" data-toggle="tab" aria-expanded="false" class="nav-link">
+							<span class="d-none d-lg-block"><i class="fas fa-money-bill"></i> طلبات شراء الكتب</span>
 						</a>
 					</li>
 				</ul>	
@@ -208,6 +203,7 @@ if ($results->num_rows > 0) {
     <a class="dropdown-item" onclick="cor('yes', '<?php echo "$row[ID]"; ?>')"><i class="fas fa-check"></i> تم</a>
     <a class="dropdown-item" onclick="cor('wait', '<?php echo "$row[ID]"; ?>')"><i class="fas fa-history"></i> في الإنتظار</a>
     <a class="dropdown-item" onclick="cor('no', '<?php echo "$row[ID]"; ?>')"><i class="fas fa-close"></i> إلغاء</a>
+    <a class="dropdown-item" onclick="delorder('<?php echo "$row[ID]"; ?>')"><i class="fas fa-trash"></i> حذف</a>
   </div>
 </div>
                                         </td>
@@ -297,7 +293,133 @@ mysqli_close($conn);
 
                         </div>
                     </div>			
-					
+
+
+
+<div class="tab-pane" id="book" role="tabpanel">
+                        <div class="card card-body">	
+						
+                            <div class="table-responsive">
+                                <table id="cors" data-toggle="table" data-mobile-responsive="true" class="table table-default table-striped table-bordered" width="100%">
+                                    <thead>
+                                    <tr class="bg-success" style="color: white !important;">
+                                        <th scope="col">#</th>
+                                        <th scope="col">رقم الطلب</th>
+                                        <th scope="col">اللقب</th>
+                                        <th scope="col">الإسم</th>
+                                        <th scope="col">البريد الإلكتروني</th>
+                                        <th scope="col">رقم الهاتف</th>
+                                        <th scope="col">إسم الكتاب</th>
+                                        <th scope="col">سعر الكتاب</th>
+                                        <th scope="col">السعر الإجمالي</th>
+                                        <th scope="col">نوع الكتاب</th>
+                                        <th scope="col">طريقة الدفع</th>
+                                        <th scope="col">الولاية</th>
+                                        <th scope="col">البلدية</th>
+                                        <th scope="col">ملاحظات</th>
+                                        <th scope="col">تاريخ الطلب</th>
+                                        <th scope="col">حالة الطلب</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+<?php
+include('db.php');
+$i = 1;
+$sql = "SELECT * FROM purshases";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  // output data of each row
+  while($row = $result->fetch_assoc()) {
+
+$sqls = "SELECT * FROM students WHERE ID='$row[userid]'";
+$results = $conn->query($sqls);
+
+if ($results->num_rows > 0) {
+  // output data of each row
+  while($rows = $results->fetch_assoc()) {
+?>
+                                    <tr>
+                                        <th scope="row"><?php echo $i;$i++; ?></th>
+                                        <td><?php echo "$row[orderid]"; ?></td>
+                                        <td><?php echo "$rows[fn]"; ?></td>
+                                        <td><?php echo "$rows[name]"; ?></td>
+                                        <td><a target="_blank" href="mailto:<?php echo "$rows[email]"; ?>"><?php echo "$rows[email]"; ?></a></td>
+                                        <td><a target="_blank" href="tel:<?php echo "$row[phone]"; ?>"><?php echo "$row[phone]"; ?></a></td>
+<?php
+$sqlt = "SELECT * FROM books WHERE ID='$row[bookid]'";
+$resultt = $conn->query($sqlt);
+
+if ($resultt->num_rows > 0) {
+  // output data of each row
+  while($rowt = $resultt->fetch_assoc()) {
+?>
+                                        <td><?php echo "$rowt[name]"; ?></td>
+                                        <td><?php echo "$rowt[price]"; ?>.00 دج</td>
+<?php
+  }}else{
+?>
+                                        <td colspan="2">لم يتم العثور على الكتاب</td>
+<?php
+  }
+?>
+                                        <td><?php if("$row[method]" == "EDAHABIA" || "$row[method]" == "CIB"){echo ("$row[total]"+"25").".00";}elseif("$row[method]" == "DELIVERED"){echo "$row[total]";} ?> دج</td>
+                                        <td><?php if("$row[type]" == "paper"){echo "النسخة الورقية";}elseif("$row[type]" == "digital"){echo "النسخة الإلكترونية";} ?></td>
+                                        <td><?php if("$row[method]" == "EDAHABIA"){echo "البطاقة الذهبية EDAHABIA";}elseif("$row[method]" == "CIB"){echo "البطاقة البنكية CIB";}elseif("$row[method]" == "DELIVERED"){echo "الدفع عند الإستلام";} ?></td>
+                                        <td><?php echo "$row[wilaya]"; ?></td>
+                                        <td><?php echo "$row[commune]"; ?></td>
+                                        <td><?php echo "$row[notes]"; ?></td>
+                                        <td><?php echo "$row[date]"; ?></td>
+							            <td><?php if("$row[status]" == "waitorder"){echo "<span class='badge text-bg-danger'>في إنتظار التوصيل</span>";}elseif("$row[status]" == "waitpay"){echo "<span class='badge text-bg-danger'>في إنتظار الدفع</span>";}elseif("$row[status]" == "paid"){echo "<span class='badge text-bg-success'>مدفوع</span>";}elseif("$row[status]" == "ok"){echo "<span class='badge text-bg-success'>تم التوصيل</span>";} ?></td>
+                                        <td>
+<div class="dropdown">
+  <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">العمليات</button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+<?php
+if("$row[method]" == "DELIVERED" AND "$row[status]" == "waitorder"){
+?>
+    <a class="dropdown-item" onclick="update('ok', '<?php echo "$row[ID]"; ?>')"><i class="fas fa-check"></i> تم التوصيل</a>
+    <a class="dropdown-item" onclick="composeSMS('<?php echo "$row[phone]"; ?>')"><i class="fas fa-paper-plane"></i> إرسال رسالة</a>
+<?php
+}
+?>
+<?php
+if(("$row[method]" == "EDAHABIA" OR "$row[method]" == "CIB") AND "$row[status]" == "waitpay"){
+?>
+    <a class="dropdown-item" onclick="update('paid', '<?php echo "$row[ID]"; ?>')"><i class="fas fa-check"></i> تم الدفع</a>
+    <a class="dropdown-item" onclick="composeSMS('<?php echo "$row[phone]"; ?>')"><i class="fas fa-paper-plane"></i> إرسال رسالة</a>
+<?php
+}
+?>
+<?php
+if("$row[status]" == "ok" OR "$row[status]" == "paid"){
+?>
+    <a class="dropdown-item" onclick="update('wait<?php if("$row[method]" == "EDAHABIA" OR "$row[method]" == "CIB"){echo "pay";}else{echo "order";} ?>', '<?php echo "$row[ID]"; ?>')"><i class="fas fa-history"></i> في الإنتظار</a>
+<?php
+}
+?>
+    <a class="dropdown-item" onclick="delborder('<?php echo "$row[ID]"; ?>')"><i class="fas fa-trash"></i> حذف</a>
+  </div>
+</div>
+                                        </td>
+                                    </tr>
+<?php
+  }}
+  }}else{
+      echo "<tr><td colspan='16'>لا توجد طلبات..</td></tr>";
+  }
+mysqli_close($conn);
+?>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
 </div>
 
 </div>
@@ -311,6 +433,74 @@ mysqli_close($conn);
 <script src="changepass.js"></script>
 
 <script>
+function composeSMS(recipient) {
+  var message = "السلام عليكم، معك إدارة فضاء التلاميذ لتأكيد طلب شراء الكتاب";
+  window.location.href = "sms:" + recipient + "?body=" + encodeURIComponent(message);
+}
+
+function update(status, id){
+$.ajax({
+    type: "POST",
+    url: "updatebook.php",
+    data: {
+        wdo: "update",
+        status: status,
+        id: id
+    },
+    success: function(dataResult) {
+        var dataResult = JSON.parse(dataResult);
+        if(dataResult.statusCode==200){
+            alertify.success('تمت العملية بنجاح');
+            location.reload();
+        }else if(dataResult.statusCode==201){
+            alertify.error('تعذّر إتمام العملية');
+        }
+    }
+});
+}
+
+function delborder(id){
+    $.ajax({
+		url: "actions.php",
+		type: "POST",
+        data: {
+            type: 'delborder',
+            id: id
+        },
+		cache: false,
+		success: function(dataResult){
+		var dataResult = JSON.parse(dataResult);
+		if(dataResult.statusCode==200){
+            alertify.success('تمت العملية بنجاح');
+            location.reload();
+        }else if(dataResult.statusCode==201){
+            alertify.error('تعذّر إتمام العملية');
+        }
+        }
+    });
+}
+
+function delorder(id){
+    $.ajax({
+		url: "actions.php",
+		type: "POST",
+        data: {
+            type: 'delorder',
+            id: id
+        },
+		cache: false,
+		success: function(dataResult){
+		var dataResult = JSON.parse(dataResult);
+		if(dataResult.statusCode==200){
+            alertify.success('تمت العملية بنجاح');
+            location.reload();
+        }else if(dataResult.statusCode==201){
+            alertify.error('تعذّر إتمام العملية');
+        }
+        }
+    });
+}
+
 function cor(st, id){
     if(st == "yes"){
         var send = "تم";
@@ -366,7 +556,24 @@ function ver(ver, id){
     });
 }
 </script>
-<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });</script><!-- end webpushr code -->
+<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });
+webpushr('fetch_id',function (sid) {
+    $.ajax({
+		url: "auth/sid.php",
+		type: "POST",
+        data: {
+            sid: sid
+        },
+		cache: false,
+		success: function(dataResult){
+		var dataResult = JSON.parse(dataResult);
+		if(dataResult.statusCode==201){
+            alertify.error('تم منع الإشعارات');
+            location.href = "logout";
+        }
+        }
+    });
+});</script><!-- end webpushr code -->
                                 </body>
 
                                 </html>

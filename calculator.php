@@ -1,17 +1,17 @@
 <?php
 if(!isset($_COOKIE['id'])){
-    header('Location: login');
+    header('Location: login?from=calculator');
 }
-if($_COOKIE['year'] <> "السنة ثانية ثانوي" AND $_COOKIE['div'] <> "علوم تجريبية"){
+/*if($_COOKIE['div'] <> "علوم تجريبية" AND $_COOKIE['year'] <> "السنة ثانية ثانوي"){
     header('Location: /');
-}else{
+}else{*/
 include('db.php');
 include('coes.php');
 $sql = "SELECT * FROM results WHERE userid='$_COOKIE[id]'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
   while($row = $result->fetch_assoc()) {}}else{
-$sqls = "INSERT INTO `results`(`userid`, `arabecoe`, `arabeeva`, `arabetp`, `arabetes`, `arabeexa`, `mathcoe`, `matheva`, `mathtp`, `mathtes`, `mathexa`, `physicscoe`, `physicseva`, `physicstp`, `physicstes`, `physicsexa`, `sciencecoe`, `scienceeva`, `sciencetp`, `sciencetes`, `scienceexa`, `islamiccoe`, `islamiceva`, `islamictp`, `islamictes`, `islamicexa`, `hisgeocoe`, `hisgeoeva`, `hisgeotp`, `hisgeotes`, `hisgeoexa`, `frenchcoe`, `frencheva`, `frenchtp`, `frenchtes`, `frenchexa`, `englishcoe`, `englisheva`, `englishtp`, `englishtes`, `englishexa`, `sportcoe`, `sporteva`, `sporttp`, `sporttes`, `sportexa`, `motala3a`, `machari3`) VALUES ('$_COOKIE[id]', '$arabecoe', '', '', '', '', '$mathcoe', '', '', '', '', '$physicscoe', '', '', '', '', '$sciencecoe', '', '', '', '', '$islamiccoe', '', '', '', '', '$hisgeocoe', '', '', '', '', '$frenchcoe', '', '', '', '', '$englishcoe', '', '', '', '', '$sportcoe', '', '', '', '', '', '')";
+$sqls = "INSERT INTO `results`(`userid`, `arabecoe`,  `mathcoe`, `physicscoe`, `sciencecoe`, `islamiccoe`,  `hisgeocoe`, `frenchcoe`, `englishcoe`, `sportcoe`) VALUES ('$_COOKIE[id]', '$arabecoe', '$mathcoe', '$physicscoe', '$sciencecoe', '$islamiccoe', '$hisgeocoe', '$frenchcoe', '$englishcoe', '$sportcoe')";
 if ($conn->query($sqls) === TRUE) {
   header('Location: calculator');
 } else {
@@ -19,7 +19,7 @@ if ($conn->query($sqls) === TRUE) {
 }
   }
 $conn->close();
-}
+/*}*/
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -35,13 +35,14 @@ $conn->close();
   gtag('config', 'G-5TZY2PZW11');
 </script>
         <meta charset="utf-8">
+        <meta name="google-site-verification" content="zoT5Rf9AiWTOzuI6a90el_rX4Q9JeTw92Z6ZFavesug" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="فضاء التلاميذ">
+        <meta name="author" content="Djihad Dris">
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="https://awlyaa.education.gov.dz/public/assets/images/favicon.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
         <title>فضاء التلاميذ: حساب المعدل</title>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
@@ -54,6 +55,7 @@ $conn->close();
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Alexandria&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="effetcs%20-%20Copy.css" rel="stylesheet">
         <!-- include the style -->
@@ -63,7 +65,7 @@ $conn->close();
         <!-- include the script -->
         <script src="alert/alertify.js"></script>
         <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
+        alertify.defaults.glossary.title = 'فضاء التلاميذ';
         alertify.defaults.glossary.ok = 'موافق';
         alertify.defaults.glossary.cancel = 'إلغاء';
         alertify.set('notifier','position', 'bottom-right');
@@ -71,8 +73,9 @@ $conn->close();
         <style>
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Alexandria&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap');
             body {
-                font-family: 'IBM Plex Sans Arabic', sans-serif !important;
+                font-family: 'Readex Pro', sans-serif !important;
             }
             a{
                 text-decoration: none;
@@ -86,25 +89,9 @@ $conn->close();
             .card-header:first-child {
                 border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
             }
-            popup_heading_text, notification_title, #webpushrOnBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
+            popup_heading_text, notification_title, #webpushrOnBtn, #webpushrOffBtn, webpushrheadline4, webpushrprompttext4, webpushrpromptbtnapprove4, webpushrpromptbtndeny4 {
                 font-family: 'Alexandria' !important;
             }
-
-#chatbox {
-text-align: right;
-margin: 0 auto;
-margin-bottom: 25px;
-padding: 10px;
-background: #fff;
-height: 300px !important;
-width: 100%;
-border: 1px solid #0d6efd;
-overflow: auto;
-}
-
-.msgln {
-margin:0 0 2px 0; 
-}
 
 @media only screen and (max-device-width: 475px) {
 .navbar-header {
@@ -142,22 +129,9 @@ display: none;
     <script src="https://ostad.education.gov.dz/public/assets/plugins/icheck/icheck.init.js"></script>
     <script src="https://ostad.education.gov.dz/public/assets/plugins/select2/js/select2.min.js"></script>
     <script src="https://ostad.education.gov.dz/public/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-
-        <!-- include the style -->
-        <link rel="stylesheet" href="alert/css/alertify.rtl.css" />
-        <!-- include a theme -->
-        <link rel="stylesheet" href="alert/css/themes/default.rtl.css" />
-        <!-- include the script -->
-        <script src="alert/alertify.js"></script>
-        <script>
-        alertify.defaults.glossary.title = 'ثانوية صولاج السعيد';
-        alertify.defaults.glossary.ok = 'موافق';
-        alertify.defaults.glossary.cancel = 'إلغاء';
-        alertify.set('notifier','position', 'bottom-right');
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js"></script>
     </head>
 
 <body class="fix-header card-no-border" onload="save('')">
@@ -184,28 +158,34 @@ display: none;
 
 <div class="card-body">
                 <ul class="nav nav-tabs mb-3">
+                <?php
+                if($_COOKIE['div'] == "علوم تجريبية"){
+                ?>
 					<li class="nav-item">
 						<a href="#tri" data-toggle="tab" aria-expanded="true" class="nav-link active">
 							<span class="d-none d-lg-block">المعدل الفصلي</span>
 						</a>
 					</li>
+                <?php
+                }
+                ?>
 					<li class="nav-item">
-						<a href="#ann" data-toggle="tab" aria-expanded="false" class="nav-link">
+						<a href="#ann" data-toggle="tab" aria-expanded="false" class="nav-link<?php if($_COOKIE['div'] <> "علوم تجريبية"){echo " active";} ?>">
 							<span class="d-none d-lg-block">المعدل السنوي</span>
 						</a>
 					</li>
 				</ul>	
 <div class="tab-content tabcontent-border">
-                    <div class="tab-pane show active" id="tri" role="tabpanel">
+                    <div class="tab-pane<?php if($_COOKIE['div'] == "علوم تجريبية"){echo " show active";} ?>" id="tri" role="tabpanel">
                         <div class="card card-body">
 
 <div class="alert alert-danger">
 <span><b>ملاحظة:</b> يتم حفظ جميع الخانات تلقائيا بعد كل عملية تغيير في الخانة.</span>
 </div>
 <div class="table-responsive">
-<table id="results" data-toggle="table" data-mobile-responsive="true" class="table table-default table-striped table-bordered" width="100%" style="text-align: center;">
+<table id="results" data-toggle="table" data-mobile-responsive="true" class="table table-default table-bordered" width="100%" style="text-align: center;">
 <thead>
-<tr class="bg-success" style="/*color: white !important;*/ height: 200px;">
+<tr class="bg-warning" style="/*color: white !important;*/ height: 200px;">
 <th scope="col" style="text-align: center; width: 100px; line-height: 200px; font-weight: bold;">المواد</th>
 <th scope="col" style="writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; width: 50px; font-weight: bold;">معاملات المواد</th>
 <th scope="col" style="writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; width: 50px; font-weight: bold;">التقويم المستمر/20</th>
@@ -223,7 +203,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
   while($row = $result->fetch_assoc()) {
 ?>
-<tbody>
+<tbody class="table-secondary">
 <tr>
 <td scope="row">اللغة العربية وآدابها</td>
 <td><input class="form-control" type="number" max="7" min="0" id="arabecoe" onkeyup="save('arabecoe')" value="<?php echo "$row[arabecoe]"; ?>"></td>
@@ -338,30 +318,38 @@ if ($result->num_rows > 0) {
 </tr>
 </tbody>
 <?php
-  }}
+  }}else{
+?>
+<tbody>
+<tr>
+<td colspan="8">تعذر جلب البيانات، الرجاء إعادة تسجيل الدخول</td>
+</tr>
+</tbody>
+<?php
+  }
 $conn->close();
 ?>
 </table>
 </div>
-<button class="btn btn-success" onclick="savebulletin('<?php echo $_COOKIE['name']; ?>')">تحميل كشف النقاط</button>
+<button class="btn btn-danger" onclick="savebulletin('<?php echo $_COOKIE['name']; ?>')">تحميل كشف النقاط</button>
 
                         </div>
                     </div>
 
-                    <div class="tab-pane" id="ann" role="tabpanel">
+                    <div class="tab-pane<?php if($_COOKIE['div'] <> "علوم تجريبية"){echo " show active";} ?>" id="ann" role="tabpanel">
                         <div class="card card-body">
 
 <div class="table-responsive">
-<table id="annt" data-toggle="table" data-mobile-responsive="true" class="table table-default table-striped table-bordered" width="100%" style="text-align: center;">
+<table id="annt" data-toggle="table" data-mobile-responsive="true" class="table table-default table-bordered" width="100%" style="text-align: center;">
 <thead>
-<tr class="bg-success">
+<tr class="bg-warning">
 <th scope="col" style="font-weight: bold;">المعدل الفصلي 1</th>
 <th scope="col" style="font-weight: bold;">المعدل الفصلي 2</th>
 <th scope="col" style="font-weight: bold;">المعدل الفصلي 3</th>
 <th scope="col" style="font-weight: bold;">المعدل السنوي</th>
 <tr>
 </thead>
-<tbody>
+<tbody class="table-secondary">
 <tr>
 <td scope="row"><input class="form-control" type="number" max="20" min="0" id="mtri1" onkeyup="calann()" step="0.01"></td>
 <td scope="row"><input class="form-control" type="number" max="20" min="0" id="mtri2" onkeyup="calann()" step="0.01"></td>
@@ -437,7 +425,7 @@ var dataResult = JSON.parse(dataResult);
 if(dataResult.statusCode==200){
 /*document.getElementById(item).disabled = true;*/
 }else if(dataResult.statusCode==201){
-location.reload();
+alertify.error('تعذر الحفظ، الرجاء إعادة تسجيل الدخول');
 }
 }
 });
@@ -584,7 +572,24 @@ mtri.innerHTML = "المعدل الفصلي: 0.00/20";
 }
 }
 </script>
-<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });</script><!-- end webpushr code -->
+<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOaeNul9pt9rWtixsGEKsdZ8XzHFYRg6pug3Rd6aKNNePh3JG8ArFCDBxrXf6MyFQiVGRlE3lNJjjtOWCxfWrBU' });
+webpushr('fetch_id',function (sid) {
+    $.ajax({
+		url: "auth/sid.php",
+		type: "POST",
+        data: {
+            sid: sid
+        },
+		cache: false,
+		success: function(dataResult){
+		var dataResult = JSON.parse(dataResult);
+		if(dataResult.statusCode==201){
+            alertify.error('تم منع الإشعارات');
+            location.href = "logout";
+        }
+        }
+    });
+});</script><!-- end webpushr code -->
 
 </body>
 
